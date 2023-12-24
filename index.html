@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	<div class="container">
+		<h1>Weather Forecast</h1>
+		<input type="text" id="locationInput" placeholder="Enter location">
+		<button onclick="getWeather()">Get Forecast</button>
+		<div id="weatherDisplay"></div>
+	</div>
+	<script src="wajs.js"></script>
+	<form>
+    <label for="phone_number">Phone Number:</label>
+    <input type="text" id="phone_number" name="phone_number" required><br>
+
+    <label for="message">Message:</label>
+    <textarea id="message" name="message" rows="4" required></textarea>
+
+    <button type="button" id="sendSMS">Send SMS</button>
+</form>
+<script>
+    const username = 'anafa2001';
+    const password = 'Afrath2001';
+    const apiKey = '1bc3fe549a58baf93e5b70990cc6a2cc-4c9b0f68-af5e-4a6d-b9ef-b80174b55faf';
+
+    document.getElementById('sendSMS').addEventListener('click', function() {
+        const phoneNumber = document.getElementById('phone_number').value;
+        const message = document.getElementById('message').value;
+
+        fetch('https://dk9mp1.api.infobip.com/sms/2/text/single', {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Basic ' + btoa(`${username}:${password}`),
+                'Content-Type': 'application/json',
+                'x-api-key': apiKey
+            },
+            body: JSON.stringify({
+                from: 'HNB',
+                to: phoneNumber,
+                text: message
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            alert('Message sent successfully!');
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error sending message');
+        });
+    });
+</script>
+
+
+
+</body>
+</html>
